@@ -16,7 +16,7 @@ coverage
 .history
 /cypress/videos/
 /cypress/screenshots/
-
+.history
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
