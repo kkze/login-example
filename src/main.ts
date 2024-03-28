@@ -5,7 +5,6 @@ import App from './App.vue'
 import router from './router'
 
 // css
-import "uno.css"
 import "normalize.css"
 import "element-plus/dist/index.css"
 import "element-plus/theme-chalk/dark/css-vars.css"
