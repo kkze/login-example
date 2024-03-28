@@ -1,14 +1,5 @@
+import { createPinia } from "pinia"
 
-import type { UserData } from '@/types';
-import { defineStore } from 'pinia';
+const store = createPinia()
 
-export const useUserStore = defineStore('user', {
-  state: () => ({
-    user: null,
-  }),
-  actions: {
-    setUser(userData:UserData) {
-      this.user = userData;
-    },
-  },
-});
+export default store

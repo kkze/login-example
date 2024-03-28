@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue"
 // import { useRouter } from "vue-router"
-import { type FormInstance, type FormRules } from "element-plus"
+import { ElMessage, type FormInstance, type FormRules } from "element-plus"
 import { User, Lock,  } from "@element-plus/icons-vue"
 import Owl from "./components/Owl.vue"
 import { useFocus } from "./hooks/useFocus"
-import type { UserData } from "@/types"
-import { getToken, setToken } from "@/utils/cookies"
-import { loginApi, type LoginResponseData } from "@/api/login"
+import type { LoginRequestData } from "@/types"
 import router from "@/router"
+import { useUserStore } from "@/store/modules/user"
+
 
 const { isFocus, handleBlur, handleFocus } = useFocus()
 
@@ -18,7 +18,7 @@ const loginFormRef = ref<FormInstance | null>(null)
 /** 登录按钮 Loading */
 const loading = ref(false)
 /** 登录表单数据 */
-const loginFormData: UserData = reactive({
+const loginFormData: LoginRequestData = reactive({
   username: "admin",
   password: "12345678",
 })
@@ -31,23 +31,20 @@ const loginFormRules: FormRules = {
   ],
   code: [{ required: true, message: "请输入验证码", trigger: "blur" }]
 }
-const login = async({ username, password }: LoginResponseData) => {
-      const data = await loginApi({ username, password })
-      console.log(data);
-      const token = ref<string>(getToken() || "")
-      setToken(data.token)
-      token.value = data.token
-      }
+
 /** 登录逻辑 */
 const handleLogin = () => {
   loginFormRef.value?.validate((valid: boolean, fields) => {
     if (valid) {
       loading.value = true
-      login(loginFormData).then(() => {
+      useUserStore()
+      .login(loginFormData).then(() => {
+          console.log(loginFormData);
           router.push({ path: "/" })
         })
         .catch(() => {
           loginFormData.password = ""
+          ElMessage.error("登录失败")
         })
         .finally(() => {
           loading.value = false
