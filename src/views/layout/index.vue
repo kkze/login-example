@@ -10,10 +10,14 @@
           <el-aside v-show="isSidebarOpen" :style="{ width: asideWidth }">
             <el-menu :default-openeds="['1']">
               <el-menu-item index="1">
-                <router-link to="/dashboard">任务列表</router-link>
+                <router-link class="item-content" to="/dashboard">
+                    任务列表
+                </router-link>
               </el-menu-item>
               <el-menu-item index="2">
-                <router-link to="/logs_table">日志表</router-link>
+                <router-link class="item-content" to="/logs_table">
+                    日志表
+                </router-link>
               </el-menu-item>
             </el-menu>
           </el-aside>
@@ -57,6 +61,10 @@ function toggleSideBar() {
 .slide-enter-from, .slide-leave-to {
   opacity: 0;
   transform: translateX(-100%);
+}
+.item-content{
+  width: 100%;
+  height: 100%;
 }
 </style>
   
