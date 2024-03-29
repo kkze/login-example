@@ -6,7 +6,7 @@ import TaskCard from "./components/TaskCard.vue"
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header class="header" type="large">
+      <el-header  class="header app-container" type="large">
         <el-icon class="icon" size="32"><List /></el-icon>
         <h2>日志管理系统</h2>
       </el-header>

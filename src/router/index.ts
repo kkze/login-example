@@ -1,6 +1,7 @@
 import Layout  from '@/views/layout/index.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { getToken } from '@/utils/cookies';
+import { useUserStore } from '@/store/modules/user';
 
 const routes = [
   {
@@ -38,15 +39,18 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const token = getToken(); // 假设 getToken() 用于获取当前用户的 Token
+router.beforeEach(async(to, from, next) => {
+  const userStore = useUserStore();
+  const publicPages = ['/login']; // 公开访问的页面
+  const authRequired = !publicPages.includes(to.path); // 判断当前路由是否需要认证
+  const loggedIn = userStore.token; // 检查用户是否登录
 
-  if (to.meta.requiresAuth && !token) {
-    // 如果路由需要认证且用户未登录（即没有Token），则重定向到登录页
-    next({ name: 'login' });
-  } else {
-    next(); // 用户已登录，或者访问不需要认证的路由，正常导航到目标页面
+  if (authRequired && !loggedIn) {
+    return next('/login');
   }
+
+  next();
 });
+
 
 export default router;

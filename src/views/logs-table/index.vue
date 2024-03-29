@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app-container">
       <vxe-table
         border
         height="500"

@@ -33,28 +33,21 @@ const loginFormRules: FormRules = {
 }
 
 /** 登录逻辑 */
-const handleLogin = () => {
-  loginFormRef.value?.validate((valid: boolean, fields) => {
-    if (valid) {
-      loading.value = true
-      useUserStore()
-      .login(loginFormData).then(() => {
-          console.log(loginFormData);
-          router.push({ path: "/" })
-        })
-        .catch(() => {
-          loginFormData.password = ""
-          ElMessage.error("登录失败")
-        })
-        .finally(() => {
-          loading.value = false
-        })
-
-    } else {
-      console.error("表单校验不通过", fields)
+const handleLogin = async() => {
+  const valid = await loginFormRef.value?.validate();
+  if (valid) {
+    loading.value = true;
+    try {
+      await useUserStore().login(loginFormData);
+      router.push({ path: "/" });
+    } finally {
+      loading.value = false;
     }
-  })
-}
+  } else {
+    console.error("表单校验不通过");
+  }
+};
+
 </script>
 
 <template>
