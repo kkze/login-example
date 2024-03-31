@@ -12,3 +12,15 @@ export interface TasksRequestData{
     schedule?: 'daily'|'hourly'|'minutely'|'monthly'|'weekly'|'',
     execute_type: 'immediate'|'scheduled',
 }
+
+export interface TasksData{
+    execute_type: "scheduled"|'immediate',
+    id: number,
+    name: string,
+    last_run: string,
+    next_run: string,
+    schedule: "minutely"|'hourly'|'daily'|'weekly'|'monthly'|'',
+    start_time: string,
+    status: "running"|"stopped"|"completed",
+    task_type: "repeat"|'single',
+}

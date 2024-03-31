@@ -1,7 +1,7 @@
 import { request } from "@/utils/service";
-import { type TasksRequestData } from "@/types";
+import { type TasksData, type TasksRequestData } from "@/types";
 
-/** 登录并返回 Token */
+/** 创建任务 */
 export function createTaskApi(data: TasksRequestData) {
     return request<TasksResponseData>({
         url: "/tasks",
@@ -9,6 +9,15 @@ export function createTaskApi(data: TasksRequestData) {
         data,
     });
 }
+
+export function getTasks() {
+    return request<TasksListData>({
+        url: "/tasks/list",
+        method: "get",
+        data: {},
+    });
+}
+
 
 /** 登出操作 */
 export function logoutApi() {
@@ -19,3 +28,4 @@ export function logoutApi() {
 }
 
 export type TasksResponseData = { message: string };
+export type TasksListData = [TasksData];

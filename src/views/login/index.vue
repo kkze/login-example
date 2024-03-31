@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue"
 // import { useRouter } from "vue-router"
-import { ElMessage, type FormInstance, type FormRules } from "element-plus"
+import {  type FormInstance, type FormRules } from "element-plus"
 import { User, Lock,  } from "@element-plus/icons-vue"
 import Owl from "./components/Owl.vue"
 import { useFocus } from "./hooks/useFocus"
