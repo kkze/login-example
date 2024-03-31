@@ -8,6 +8,7 @@ import { useFocus } from "./hooks/useFocus"
 import type { LoginRequestData } from "@/types"
 import router from "@/router"
 import { useUserStore } from "@/store/modules/user"
+import { registerApi } from "@/api/login"
 
 
 const { isFocus, handleBlur, handleFocus } = useFocus()
@@ -48,6 +49,20 @@ const handleLogin = async() => {
   }
 };
 
+const handleRegister = async() => {
+  const valid = await loginFormRef.value?.validate();
+  if (valid) {
+    loading.value = true;
+    try {
+      await registerApi(loginFormData);
+      router.push({ path: "/" });
+    } finally {
+      loading.value = false;
+    }
+  } else {
+    console.error("表单校验不通过");
+  }
+};
 </script>
 
 <template>
@@ -84,6 +99,7 @@ const handleLogin = async() => {
           </el-form-item>
 
           <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin">登 录</el-button>
+          <el-button :loading="loading" type="primary" size="large" @click.prevent="handleRegister">注 册</el-button>
         </el-form>
       </div>
     </div>

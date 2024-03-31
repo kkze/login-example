@@ -10,6 +10,14 @@ export function loginApi(data: LoginRequestData) {
     });
 }
 
+export function registerApi(data: LoginRequestData) {
+    return request<LoginResponseData>({
+        url: "auth/register",
+        method: "post",
+        data,
+    });
+}
+
 /** 登出操作 */
 export function logoutApi() {
     return request({
