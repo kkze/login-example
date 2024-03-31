@@ -1,6 +1,5 @@
 import Layout  from '@/views/layout/index.vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import { getToken } from '@/utils/cookies';
 import { useUserStore } from '@/store/modules/user';
 
 const routes = [

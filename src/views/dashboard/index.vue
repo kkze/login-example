@@ -1,6 +1,6 @@
 import { type } from 'vue-router';
 <script lang="ts" setup>
-import TaskCard from "./components/TaskCard.vue"
+import TaskItem from "./components/TaskItem.vue"
 
 </script>
 <template>
@@ -8,11 +8,11 @@ import TaskCard from "./components/TaskCard.vue"
     <el-container>
       <el-header  class="header app-container" type="large">
         <el-icon class="icon" size="32"><List /></el-icon>
-        <h2>日志管理系统</h2>
+        <h2>任务管理</h2>
       </el-header>
       <el-main>
         <!-- <el-empty description="欢迎来到首页" /> -->
-        <TaskCard/>
+        <TaskItem/>
       </el-main>
     </el-container>
   </div>

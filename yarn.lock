@@ -335,6 +335,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.21.0":
+  version: 7.24.1
+  resolution: "@babel/runtime@npm:7.24.1"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 10c0/500c6a99ddd84f37c7bc5dbc84777af47b1372b20e879941670451d55484faf18a673c5ebee9ca2b0f36208a729417873b35b1b92e76f811620f6adf7b8cb0f1
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.22.15, @babel/template@npm:^7.23.9, @babel/template@npm:^7.24.0":
   version: 7.24.0
   resolution: "@babel/template@npm:7.24.0"
@@ -1857,6 +1866,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns@npm:^2.22.1":
+  version: 2.30.0
+  resolution: "date-fns@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.21.0"
+  checksum: 10c0/e4b521fbf22bc8c3db332bbfb7b094fd3e7627de0259a9d17c7551e2d2702608a7307a449206065916538e384f37b181565447ce2637ae09828427aed9cb5581
+  languageName: node
+  linkType: hard
+
 "dayjs@npm:^1.11.3":
   version: 1.11.10
   resolution: "dayjs@npm:1.11.10"
@@ -3017,6 +3035,7 @@ __metadata:
     vue: "npm:^3.4.21"
     vue-router: "npm:^4.3.0"
     vue-tsc: "npm:^2.0.6"
+    vue3-datepicker: "npm:^0.4.0"
     vxe-table: "npm:^4.5.21"
     vxe-table-plugin-element: "npm:^4.0.1"
   languageName: unknown
@@ -3683,6 +3702,13 @@ __metadata:
   dependencies:
     picomatch: "npm:^2.2.1"
   checksum: 10c0/6fa848cf63d1b82ab4e985f4cf72bd55b7dcfd8e0a376905804e48c3634b7e749170940ba77b32804d5fe93b3cc521aa95a8d7e7d725f830da6d93f3669ce66b
+  languageName: node
+  linkType: hard
+
+"regenerator-runtime@npm:^0.14.0":
+  version: 0.14.1
+  resolution: "regenerator-runtime@npm:0.14.1"
+  checksum: 10c0/1b16eb2c4bceb1665c89de70dcb64126a22bc8eb958feef3cd68fe11ac6d2a4899b5cd1b80b0774c7c03591dc57d16631a7f69d2daa2ec98100e2f29f7ec4cc4
   languageName: node
   linkType: hard
 
@@ -4381,6 +4407,17 @@ __metadata:
   bin:
     vue-tsc: bin/vue-tsc.js
   checksum: 10c0/0b9d77ab4aa63eac12e9d7578f50c80a4628eac54fc94b4b29c200ecbd1ecb9e18153450a344b191c8785edfb61a231436d437de8379809053cbceedbe3e8e45
+  languageName: node
+  linkType: hard
+
+"vue3-datepicker@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "vue3-datepicker@npm:0.4.0"
+  dependencies:
+    date-fns: "npm:^2.22.1"
+  peerDependencies:
+    vue: ^3.0.0
+  checksum: 10c0/103e2e1cb2ab41d6b249e37d1c1db122eb9acf62a9ea48979503accb078acb4ae133878f86c14bacd248936090f14f30e1b074c7cc9b70c251fdcb28564329a7
   languageName: node
   linkType: hard
 

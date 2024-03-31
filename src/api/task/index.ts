@@ -1,10 +1,10 @@
-import type { LoginRequestData } from "@/types";
 import { request } from "@/utils/service";
+import { type TasksRequestData } from "@/types";
 
 /** 登录并返回 Token */
-export function loginApi(data: LoginRequestData) {
-    return request<LoginResponseData>({
-        url: "auth/login",
+export function createTaskApi(data: TasksRequestData) {
+    return request<TasksResponseData>({
+        url: "/tasks",
         method: "post",
         data,
     });
@@ -18,4 +18,4 @@ export function logoutApi() {
     });
 }
 
-export type LoginResponseData = { token: string };
+export type TasksResponseData = { message: string };

@@ -1,16 +1,19 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
-import { ElMessage } from "element-plus";
 import { get, merge } from "lodash-es"
-import { getToken } from "./cookies";
+import { getToken, removeToken } from "./cookies";
+import router from "@/router";
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
-
+  removeToken()
+  router.push("/login")
   }
 function createService(){
     const service = axios.create()
     // 请求拦截
     service.interceptors.request.use(
-        (config) => config,
+        (config) => {
+          console.log("config",config);
+          return config},
         (error) => Promise.reject(error)
     )
     // 响应拦截
@@ -21,6 +24,7 @@ function createService(){
         },
         (error) => {
             // status 是 HTTP 状态码
+            console.log("error",error);
             const status = get(error, "response.status")
             switch (status) {
               case 400:
@@ -28,7 +32,7 @@ function createService(){
                 break
               case 401:
                 // Token 过期时
-                error.message = "请重新登录"
+                error.message = "登录失败"
                 logout()
                 break
               case 403:
@@ -61,7 +65,7 @@ function createService(){
               default:
                 break
             }
-            ElMessage.error(error.message)
+            // ElMessage.error(error.message)
             return Promise.reject(error)
           }
     )

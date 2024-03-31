@@ -17,8 +17,8 @@ export const useUserStore = defineStore("user", () => {
             token.value = data.token;
             ElMessage.success("登录成功");
             router.push('/');
-        } catch (error) {
-            ElMessage.error("登录失败");
+        } catch (error: any) {
+            ElMessage.error(error.message);
             throw error;
         }
     };
