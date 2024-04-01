@@ -2,6 +2,7 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
 import { get, merge } from "lodash-es"
 import { getToken, removeToken } from "./cookies";
 import router from "@/router";
+import { ElMessage } from "element-plus";
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
   removeToken()
@@ -65,7 +66,7 @@ function createService(){
               default:
                 break
             }
-            // ElMessage.error(error.message)
+            ElMessage.error(error.response.data.msg)
             return Promise.reject(error)
           }
     )

@@ -8,7 +8,6 @@ import { useFocus } from "./hooks/useFocus"
 import type { LoginRequestData } from "@/types"
 import router from "@/router"
 import { useUserStore } from "@/store/modules/user"
-import { registerApi } from "@/api/login"
 
 
 const { isFocus, handleBlur, handleFocus } = useFocus()
@@ -35,12 +34,26 @@ const loginFormRules: FormRules = {
 
 /** 登录逻辑 */
 const handleLogin = async() => {
+  console.log("123456");
   const valid = await loginFormRef.value?.validate();
   if (valid) {
     loading.value = true;
     try {
       await useUserStore().login(loginFormData);
-      router.push({ path: "/" });
+    } finally {
+      loading.value = false;
+    }
+  } else {
+    console.error("表单校验不通过");
+  }
+};
+const isRegister = ref(false)
+const handleRegister = async() => {
+  const valid = await loginFormRef.value?.validate();
+  if (valid) {
+    loading.value = true;
+    try {
+      await useUserStore().regist(loginFormData);
     } finally {
       loading.value = false;
     }
@@ -49,20 +62,9 @@ const handleLogin = async() => {
   }
 };
 
-const handleRegister = async() => {
-  const valid = await loginFormRef.value?.validate();
-  if (valid) {
-    loading.value = true;
-    try {
-      await registerApi(loginFormData);
-      router.push({ path: "/" });
-    } finally {
-      loading.value = false;
-    }
-  } else {
-    console.error("表单校验不通过");
-  }
-};
+const changeisRegister = () =>{
+  isRegister.value = !isRegister.value
+}
 </script>
 
 <template>
@@ -98,8 +100,11 @@ const handleRegister = async() => {
             />
           </el-form-item>
 
-          <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin">登 录</el-button>
-          <el-button :loading="loading" type="primary" size="large" @click.prevent="handleRegister">注 册</el-button>
+          <el-button :loading="loading"  v-if="isRegister" type="primary" size="large" @click.prevent="handleRegister">注 册</el-button>
+          <el-button :loading="loading" v-if="!isRegister" type="primary" size="large" @click.prevent="handleLogin">登 录</el-button>
+          
+          <el-link  :modle="isRegister" v-if="!isRegister" @click.prevent="changeisRegister" type="primary">注册</el-link>
+          <el-link  :modle="isRegister" v-if="isRegister" @click.prevent="changeisRegister" type="primary">登录</el-link>
         </el-form>
       </div>
     </div>

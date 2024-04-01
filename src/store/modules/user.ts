@@ -1,7 +1,7 @@
 // store/modules/user.ts
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { loginApi, logoutApi } from "@/api/login";
+import { loginApi, logoutApi, registerApi } from "@/api/login";
 import { getToken, setToken, removeToken } from "@/utils/cookies";
 import { ElMessage } from "element-plus";
 import router from "@/router"; // 确保正确导入路由
@@ -36,5 +36,18 @@ export const useUserStore = defineStore("user", () => {
         }
     };
 
-    return { token, login, logout };
+    const regist = async(loginFormData: LoginRequestData) => {
+        try {
+            const data = await registerApi(loginFormData);
+            setToken(data.token);
+            token.value = data.token;
+            ElMessage.success("注册成功，请返回登录");
+        } catch (error: any) {
+            ElMessage.error(error.message);
+            throw error;
+        }
+    };
+    // registerApi(loginFormData)
+
+    return { token, login, logout,regist };
 });
