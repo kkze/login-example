@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <vxe-table border height="500" :row-config="{ isCurrent: true, isHover: true }" :column-config="{ resizable: true }"
-            :data="tableData" 
+            :data="tableData.tasks" 
             @cell-click="cellClickEvent"
             >
             <vxe-column type="seq" width="60"></vxe-column>
@@ -43,17 +43,11 @@ const detailData = ref<{
     value: string
 }[]>([])
 
-const tableData = ref<TasksData[]>([
-])
+const tableData = useTaskStore()
+onBeforeMount(async() => {
+  await tableData.updateTasksList(); // 加载tasks数据
+});
 
-const getTasksaskList = async() =>{
-    tableData.value = await useTaskStore().tasksList();
-
-    console.log("tasksListData",tableData.value );
-
-}
-
-onBeforeMount(getTasksaskList)
 
 const cellClickEvent: VxeTableEvents.CellClick<TasksData> = ({ row }: { row: TasksData }) => {
     const fields: (keyof TasksData)[] = ['name', 'last_run', 'next_run', 'schedule', 'start_time', 'status','task_type'];

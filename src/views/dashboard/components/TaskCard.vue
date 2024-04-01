@@ -5,6 +5,7 @@ import { ElMessage } from 'element-plus';
 import type { TasksRequestData } from '@/types';
 import { createTaskApi } from '@/api/task';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import { useTaskStore } from '../../../../.history/src/store/modules/task_20240401101951';
 dayjs.extend(isSameOrAfter);
 
 const taskInfo: TasksRequestData = reactive({
@@ -21,6 +22,7 @@ const createTask = async(taskInfo: TasksRequestData) => {
     try {
         const data = await createTaskApi(taskInfo);
         ElMessage.success(data.message);
+        useTaskStore().updateTasksList()
     } catch (error:any) {
         ElMessage.error(error.message);
         throw error;
