@@ -13,7 +13,6 @@ function createService(){
     // 请求拦截
     service.interceptors.request.use(
         (config) => {
-          console.log("config",config);
           return config},
         (error) => Promise.reject(error)
     )

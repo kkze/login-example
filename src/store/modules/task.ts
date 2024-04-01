@@ -1,7 +1,7 @@
 // store/modules/user.ts
 import { defineStore } from "pinia";
 import { ElMessage } from "element-plus";
-import { getTasks } from "@/api/task";
+import { getTasksApi } from "@/api/task";
 import { ref } from "vue";
 import type { TasksData } from "@/types";
 
@@ -20,7 +20,8 @@ export const useTaskStore = defineStore("task", () => {
         }]);
     const updateTasksList = async() => {
         try {
-            tasks.value = await getTasks();
+            tasks.value = await getTasksApi();
+            console.log(tasks.value);
             ElMessage.success("获取任务列表成功");
             return tasks;
         } catch (error) {

@@ -1,5 +1,6 @@
 <template>
     <div class="app-container">
+      <h1>因为时间关系，暂不处理获取日志表，和任务功能相似</h1>
       <vxe-table
         border
         height="500"

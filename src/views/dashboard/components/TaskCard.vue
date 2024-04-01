@@ -1,20 +1,47 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { inject, reactive, ref, onMounted, type Ref } from 'vue';
 import dayjs from 'dayjs';
 import { ElMessage } from 'element-plus';
-import type { TasksRequestData } from '@/types';
-import { createTaskApi } from '@/api/task';
+import type { TasksData, TasksRequestData } from '@/types';
+import { createTaskApi, editTaskApi } from '@/api/task';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
-import { useTaskStore } from '../../../../.history/src/store/modules/task_20240401101951';
+import { useTaskStore } from '@/store/modules/task';
 dayjs.extend(isSameOrAfter);
 
-const taskInfo: TasksRequestData = reactive({
+let taskInfo: TasksRequestData = reactive({
     name: '备份日志',
     task_type: 'single',
     start_time: '',
     schedule: '',
     execute_type: 'immediate',
 });
+const detailID = inject('detailID') as Ref<number>; //TODO 解决类型问题
+const isEdit = ref(false)
+//TODO 编辑功能
+onMounted(() => {
+    if (detailID) {
+        const newTaskInfo = {...taskInfo}
+
+        taskInfo = useTaskStore().tasks.find(i => {
+            i.id === detailID?.value
+            return i
+        }
+        ) as TasksRequestData
+        // newTaskInfo
+        console.log('taskInfo', taskInfo);
+        isEdit.value = true
+    }
+})
+const editTask = async(detailData: TasksData) => {
+    try {
+        const data = await editTaskApi(detailData);
+        ElMessage.success(data.message);
+        useTaskStore().updateTasksList()
+    } catch (error: any) {
+        ElMessage.error(error.message);
+        throw error;
+    }
+}
 
 const defaultTime = new Date()
 
@@ -23,12 +50,16 @@ const createTask = async(taskInfo: TasksRequestData) => {
         const data = await createTaskApi(taskInfo);
         ElMessage.success(data.message);
         useTaskStore().updateTasksList()
-    } catch (error:any) {
+    } catch (error: any) {
         ElMessage.error(error.message);
         throw error;
     }
 }
 const onSubmit = () => {
+    if (isEdit.value && detailID.value) {
+        editTask(taskInfo as TasksData)
+        return
+    }
 
     console.log('dayjs', dayjs().isSameOrAfter(dayjs(taskInfo.start_time)));
     if (taskInfo.start_time && dayjs().isSameOrAfter(dayjs(taskInfo.start_time))) {

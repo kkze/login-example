@@ -4,7 +4,7 @@
             :data="tableData.tasks" 
             @cell-click="cellClickEvent"
             >
-            <vxe-column type="seq" width="60"></vxe-column>
+            <vxe-column field="id"  title="id" width="60"></vxe-column>
             <vxe-column field="name" title="任务名称"></vxe-column>
             <vxe-column field="last_run" title="上次运行时间"></vxe-column>
             <vxe-column field="next_run" title="下次运行时间"></vxe-column>
@@ -34,8 +34,7 @@ import { useTaskStore } from "@/store/modules/task"
 import TaskCard from "./TaskCard.vue"
 import type { VxeTableEvents } from 'vxe-table';
 
-
-
+import { provide } from 'vue'
 
 const showDetails = ref(false)
 const detailData = ref<{
@@ -46,14 +45,25 @@ const detailData = ref<{
 const tableData = useTaskStore()
 onBeforeMount(async() => {
   await tableData.updateTasksList(); // 加载tasks数据
+  
 });
+const detailID = ref(0)
+
+provide('detailID',detailID)
 
 
 const cellClickEvent: VxeTableEvents.CellClick<TasksData> = ({ row }: { row: TasksData }) => {
-    const fields: (keyof TasksData)[] = ['name', 'last_run', 'next_run', 'schedule', 'start_time', 'status','task_type'];
-    detailData.value = fields.map(field => {
-        return { label: field, value: row[field]?.toString() };
+    const fields: (keyof TasksData)[] = ['id','name', 'last_run', 'next_run', 'schedule', 'start_time', 'status','task_type'];
+
+    detailData.value = fields.map((field: keyof TasksData | "") => {
+        if (!field) return { label: "", value: "" };
+        if (field.toString() === 'id'){
+            console.log('父组件detailData',row[field]?.toString() || "");
+            detailID.value = row[field] as number || -1
+        }
+        return { label: field.toString(), value: row[field]?.toString() || "" };
     });
+
     showDetails.value = true;
 };
 

@@ -10,11 +10,22 @@ export function createTaskApi(data: TasksRequestData) {
     });
 }
 
-export function getTasks() {
+/** 获取任务列表 */
+export function getTasksApi() {
     return request<TasksListData>({
         url: "/tasks/list",
         method: "get",
         data: {},
+    });
+}
+
+/** 编辑任务 */
+export function editTaskApi(data:TasksData) {
+    console.log('`data.id:',`/tasks/${data.id}`,);
+    return request<TasksResponseData>({
+        url: `/tasks/${data.id}`,
+        method: "PUT",
+        data: data,
     });
 }
 
